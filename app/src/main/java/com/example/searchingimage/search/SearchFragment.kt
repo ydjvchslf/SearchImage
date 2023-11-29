@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import com.example.searchingimage.R
 import com.example.searchingimage.databinding.FragmentSearchBinding
 import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.fragTitle
 
 class SearchFragment : Fragment() {
 
@@ -29,6 +30,7 @@ class SearchFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         AppDebug.i(logTag, "onCreateView-()")
+        fragTitle.value = "Search"
         return binding.root
     }
 

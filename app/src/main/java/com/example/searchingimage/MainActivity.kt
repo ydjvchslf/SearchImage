@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.searchingimage.databinding.ActivityMainBinding
+import com.example.searchingimage.util.fragTitle
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,5 +21,9 @@ class MainActivity : AppCompatActivity() {
         // 네비게이션
         val navController = (supportFragmentManager.findFragmentById(R.id.main_nav_host) as NavHostFragment).findNavController()
         binding.bottomNav.setupWithNavController(navController)
+        // 타이틀
+        fragTitle.observe(this) { title ->
+            binding.title.text = title
+        }
     }
 }

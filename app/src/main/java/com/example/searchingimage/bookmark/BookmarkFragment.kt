@@ -10,8 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.example.searchingimage.R
 import com.example.searchingimage.databinding.FragmentBookmarkBinding
-import com.example.searchingimage.search.SearchFragmentDirections
 import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.fragTitle
 
 class BookmarkFragment: Fragment() {
 
@@ -30,6 +30,7 @@ class BookmarkFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         AppDebug.i(logTag, "onCreateView-()")
+        fragTitle.value = "Bookmark"
         return binding.root
     }
 

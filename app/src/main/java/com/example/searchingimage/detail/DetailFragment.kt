@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.searchingimage.R
 import com.example.searchingimage.databinding.FragmentDetailBinding
 import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.fragTitle
 
 class DetailFragment: Fragment() {
 
@@ -28,6 +29,7 @@ class DetailFragment: Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         AppDebug.i(logTag, "onCreateView-()")
+        fragTitle.value = "Detail"
         return binding.root
     }
 }
