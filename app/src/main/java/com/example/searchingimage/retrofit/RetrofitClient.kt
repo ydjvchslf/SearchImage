@@ -3,7 +3,6 @@ package com.example.searchingimage.retrofit
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.BASE_URL
 import com.google.gson.GsonBuilder
-import com.poliot.vest.retrofit.ResponseAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -34,5 +33,5 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         .build()
 
-    val retrofitService: RetrofitService = retrofit.create(RetrofitService::class.java)
+    val unsplashApi: UnsplashApi = retrofit.create(UnsplashApi::class.java)
 }

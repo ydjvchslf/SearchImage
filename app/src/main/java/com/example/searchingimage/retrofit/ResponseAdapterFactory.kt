@@ -1,6 +1,6 @@
-package com.poliot.vest.retrofit
+package com.example.searchingimage.retrofit
 
-import com.example.searchingimage.retrofit.Result
+import com.poliot.vest.retrofit.ResponseAdapter
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit

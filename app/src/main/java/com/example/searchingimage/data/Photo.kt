@@ -2,8 +2,10 @@ package com.example.searchingimage.data
 
 data class Photo (
     val id: String,
-    val width: Double,
-    val height: Double,
+    val width: Int,
+    val height: Int,
     val createdTime: String,
+    val thumbnailUrl: String,
+    val smallUrl: String,
     val user: User
 )

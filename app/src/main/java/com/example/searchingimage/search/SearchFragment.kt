@@ -7,12 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.paging.PagingData
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.searchingimage.R
+import com.example.searchingimage.UnsplashAdapter
 import com.example.searchingimage.databinding.FragmentSearchBinding
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.fragTitle
@@ -52,6 +56,15 @@ class SearchFragment : Fragment() {
         binding.bookmarkBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToBookmarkFragment())
         }
+        // 리사이클러뷰
+        val adapter = UnsplashAdapter()
+
+        binding.recyclerView.apply {
+            layoutManager = GridLayoutManager(context, 4)
+            setHasFixedSize(true)
+            this.adapter = adapter
+        }
+
         // editText 포커싱, 검색어 rxJava
         binding.editText.apply {
             //requestFocus()
@@ -69,8 +82,15 @@ class SearchFragment : Fragment() {
                 .doOnNext { keyword ->
                     if (keyword.isNotEmpty() && keyword.isNotBlank()) {
                         AppDebug.d(logTag, "keyword => $keyword")
+                        //searchViewModel.searchPhoto(keyword)
+                        binding.recyclerView.scrollToPosition(0)
+                        searchViewModel.currentQuery.value = keyword
+                        searchViewModel.photos.observe(viewLifecycleOwner) {
+                            adapter.submitData(viewLifecycleOwner.lifecycle, it)
+                        }
                     } else {
                         AppDebug.d(logTag, "아무것도 안적었슈")
+                        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.empty())
                     }
                 }
                 .subscribe()
