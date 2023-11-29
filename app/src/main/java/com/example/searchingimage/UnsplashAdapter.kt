@@ -10,7 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.searchingimage.data.response.UnsplashPhoto
 import com.example.searchingimage.databinding.LayoutDataItemBinding
 
-class UnsplashAdapter: PagingDataAdapter<UnsplashPhoto, UnsplashAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
+class UnsplashAdapter(private val listener: OnItemClickListener): PagingDataAdapter<UnsplashPhoto, UnsplashAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val currentItem = getItem(position)
@@ -26,20 +26,35 @@ class UnsplashAdapter: PagingDataAdapter<UnsplashPhoto, UnsplashAdapter.PhotoVie
         return PhotoViewHolder(binding)
     }
 
-    class PhotoViewHolder(private val binding: LayoutDataItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class PhotoViewHolder(private val binding: LayoutDataItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(photo: UnsplashPhoto) {
-                binding.apply {
-                    Glide.with(itemView)
-                        .load(photo.urls.regular)
-                        .centerCrop()
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .error(com.google.android.material.R.drawable.mtrl_ic_error)
-                        .into(imageView)
+        init {
+            binding.root.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = getItem(position)
+                    if (item != null) {
+                        listener.onItemClick(item)
+                    }
                 }
             }
         }
+
+        fun bind(photo: UnsplashPhoto) {
+            binding.apply {
+                Glide.with(itemView)
+                    .load(photo.urls.thumb)
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .error(com.google.android.material.R.drawable.mtrl_ic_error)
+                    .into(imageView)
+            }
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(photo: UnsplashPhoto)
+    }
 
     companion object {
         private val PHOTO_COMPARATOR = object: DiffUtil.ItemCallback<UnsplashPhoto>() {

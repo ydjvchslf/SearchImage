@@ -17,6 +17,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.searchingimage.R
 import com.example.searchingimage.UnsplashAdapter
+import com.example.searchingimage.data.response.UnsplashPhoto
 import com.example.searchingimage.databinding.FragmentSearchBinding
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.fragTitle
@@ -24,7 +25,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
 
     private val logTag = SearchFragment::class.simpleName
     private lateinit var binding: FragmentSearchBinding
@@ -57,7 +58,7 @@ class SearchFragment : Fragment() {
             Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToBookmarkFragment())
         }
         // 리사이클러뷰
-        val adapter = UnsplashAdapter()
+        val adapter = UnsplashAdapter(this)
 
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 4)
@@ -95,6 +96,12 @@ class SearchFragment : Fragment() {
                 }
                 .subscribe()
         }
+    }
+
+    override fun onItemClick(photo: UnsplashPhoto) {
+        AppDebug.d(logTag, "onItemClick-()")
+        AppDebug.d(logTag, "photoId: ${photo.id}")
+        Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment())
     }
 
 }
