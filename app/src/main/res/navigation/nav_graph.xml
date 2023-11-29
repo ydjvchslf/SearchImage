@@ -23,6 +23,11 @@
         android:name="com.example.searchingimage.detail.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="photo"
+            app:argType="com.example.searchingimage.data.response.UnsplashPhoto"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_detailFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />

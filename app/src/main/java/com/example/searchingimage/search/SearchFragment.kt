@@ -101,7 +101,8 @@ class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
     override fun onItemClick(photo: UnsplashPhoto) {
         AppDebug.d(logTag, "onItemClick-()")
         AppDebug.d(logTag, "photoId: ${photo.id}")
-        Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment())
+        val navAction = SearchFragmentDirections.actionSearchFragmentToDetailFragment(photo)
+        Navigation.findNavController(binding.root).navigate(navAction)
     }
 
 }
