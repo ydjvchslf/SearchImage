@@ -2,6 +2,7 @@
 <layout>
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.example.searchingimage.detail.DetailViewModel" />
@@ -157,14 +158,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/heart_btn"
+            android:id="@+id/insert_btn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/created_layout"
             android:src="@drawable/ic_outline_circle_24"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginRight="50dp"
+            android:visibility="@{viewModel.crnState == false ? View.VISIBLE : View.GONE}"/>
+
+        <ImageView
+            android:id="@+id/delete_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/created_layout"
+            android:src="@drawable/ic_baseline_circle_24"
+            android:layout_marginRight="50dp"
+            android:visibility="@{viewModel.crnState == true ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

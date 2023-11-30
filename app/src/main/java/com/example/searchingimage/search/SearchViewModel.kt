@@ -7,6 +7,7 @@ import com.example.searchingimage.repository.PhotoRepository
 import com.example.searchingimage.repository.entity.Photo
 import com.example.searchingimage.retrofit.UnsplashRepository
 import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.currentBookmarkList
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -29,6 +30,7 @@ class SearchViewModel : ViewModel() {
         AppDebug.i(logTag, "createDb-()")
         photoRepository = PhotoRepository(context)
         photoList = photoRepository?.getAll()
+        currentBookmarkList = photoList
     }
 
     fun searchPhoto(keyword: String) {

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -23,6 +25,8 @@ class DetailFragment: Fragment() {
     private val detailViewModel: DetailViewModel by activityViewModels()
     // 클릭 리스너로 넘어온 Photo
     private val arg: DetailFragmentArgs by navArgs()
+    // 좋아요 상태
+    private var isUserLike = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,13 +59,13 @@ class DetailFragment: Fragment() {
                 .error(com.google.android.material.R.drawable.mtrl_ic_error)
                 .into(binding.imageView)
             // 좋아요 판별
-
-            // 좋아요 버튼
-            binding.heartBtn.setOnClickListener {
-                // 북마크 데이터 insert
+            detailViewModel.checkCurrentData(photo.id)
+            // 좋아요 해제 버튼
+            binding.insertBtn.setOnClickListener {
                 detailViewModel.insertPhoto(fromUnsplash(photo))
-                // 북마크 데이터 select
-                //detailViewModel.loadBookmark(photo.id)
+            }
+            binding.deleteBtn.setOnClickListener {
+                detailViewModel.deletePhoto(fromUnsplash(photo))
             }
         }
     }

@@ -24,6 +24,7 @@ import com.example.searchingimage.databinding.FragmentSearchBinding
 import com.example.searchingimage.repository.db.AppDatabase
 import com.example.searchingimage.repository.entity.Photo
 import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.currentBookmarkList
 import com.example.searchingimage.util.fragTitle
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -63,12 +64,12 @@ class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
         binding.bookmarkBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToBookmarkFragment())
         }
-        binding.getBtn.setOnClickListener {
+        //binding.getBtn.setOnClickListener {
             searchViewModel.photoList?.observe(viewLifecycleOwner) { photoList ->
                 AppDebug.d(logTag, "photoListSize : ${photoList.size}")
                 AppDebug.d(logTag, "photoList : $photoList")
             }
-        }
+        //}
         // 리사이클러뷰
         val adapter = UnsplashAdapter(this)
 
