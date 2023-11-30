@@ -39,5 +39,6 @@ class BookmarkFragment: Fragment() {
         binding.detailBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment())
         }
+        context?.let { bookmarkViewModel.createDb(it) }
     }
 }
