@@ -14,11 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.paging.PagingData
+import androidx.paging.log
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.room.Room
 import com.example.searchingimage.R
 import com.example.searchingimage.UnsplashAdapter
 import com.example.searchingimage.data.response.UnsplashPhoto
 import com.example.searchingimage.databinding.FragmentSearchBinding
+import com.example.searchingimage.repository.db.AppDatabase
+import com.example.searchingimage.repository.entity.Photo
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.fragTitle
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -45,17 +49,25 @@ class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
         }
         AppDebug.i(logTag, "onCreateView-()")
         fragTitle.value = "Search"
+        // val db = Room.databaseBuilder(context!!, AppDatabase::class.java, "photoDB").allowMainThreadQueries().build() // 에러 없음
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AppDebug.i(logTag, "onViewCreated-()")
+        context?.let { searchViewModel.createDb(it) }
         binding.detailBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToDetailFragment())
         }
         binding.bookmarkBtn.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(SearchFragmentDirections.actionSearchFragmentToBookmarkFragment())
+        }
+        binding.getBtn.setOnClickListener {
+            searchViewModel.photoList?.observe(viewLifecycleOwner) { photoList ->
+                AppDebug.d(logTag, "photoListSize : ${photoList.size}")
+                AppDebug.d(logTag, "photoList : $photoList")
+            }
         }
         // 리사이클러뷰
         val adapter = UnsplashAdapter(this)

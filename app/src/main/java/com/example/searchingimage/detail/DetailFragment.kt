@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.searchingimage.R
 import com.example.searchingimage.databinding.FragmentDetailBinding
+import com.example.searchingimage.repository.entity.Photo.Companion.fromUnsplash
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.fragTitle
 
@@ -41,6 +42,7 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AppDebug.i(logTag, "onViewCreated-()")
+        context?.let { detailViewModel.createDb(it) }
         arg.photo?.let { photo ->
             binding.myId.text = photo.id
             binding.myAuthor.text = photo.user.username
@@ -52,6 +54,15 @@ class DetailFragment: Fragment() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(com.google.android.material.R.drawable.mtrl_ic_error)
                 .into(binding.imageView)
+            // 좋아요 판별
+
+            // 좋아요 버튼
+            binding.heartBtn.setOnClickListener {
+                // 북마크 데이터 insert
+                detailViewModel.insertPhoto(fromUnsplash(photo))
+                // 북마크 데이터 select
+                //detailViewModel.loadBookmark(photo.id)
+            }
         }
     }
 }

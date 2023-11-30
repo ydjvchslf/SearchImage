@@ -69,5 +69,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="북마크 이동" />
 
+        <Button
+            android:id="@+id/get_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"
+            app:layout_constraintStart_toEndOf="@id/detail_btn"
+            android:layout_marginLeft="30dp"
+            android:text="get all" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
