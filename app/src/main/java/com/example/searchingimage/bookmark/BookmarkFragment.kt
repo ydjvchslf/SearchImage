@@ -11,8 +11,10 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.searchingimage.R
 import com.example.searchingimage.bookmark.adapter.BookmarkAdapter
+import com.example.searchingimage.data.response.UnsplashPhoto.Companion.fromPhoto
 import com.example.searchingimage.databinding.FragmentBookmarkBinding
 import com.example.searchingimage.repository.entity.Photo
+import com.example.searchingimage.search.SearchFragmentDirections
 import com.example.searchingimage.util.AppDebug
 import com.example.searchingimage.util.currentBookmarkList
 import com.example.searchingimage.util.fragTitle
@@ -43,9 +45,9 @@ class BookmarkFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.detailBtn.setOnClickListener {
-            Navigation.findNavController(binding.root).navigate(BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment())
-        }
+//        binding.detailBtn.setOnClickListener {
+//            Navigation.findNavController(binding.root).navigate(BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment())
+//        }
 
         context?.let { bookmarkViewModel.createDb(it) }
 
@@ -55,6 +57,10 @@ class BookmarkFragment: Fragment() {
             setHasFixedSize(true)
             adapter = bookmarkAdapter
             bookmarkAdapter.submitList(currentBookmarkList?.value as ArrayList<Photo>) // 여기 모르겠다
+        }
+        bookmarkAdapter.clickListener = { photo ->
+            val navAction = BookmarkFragmentDirections.actionBookmarkFragmentToDetailFragment(fromPhoto(photo))
+            Navigation.findNavController(binding.root).navigate(navAction)
         }
     }
 }
