@@ -164,7 +164,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/created_layout"
-            android:src="@drawable/ic_outline_circle_24"
+            android:src="@drawable/ic_outline_thumb_up_24"
             android:layout_marginRight="50dp"
             android:visibility="@{viewModel.crnState == false ? View.VISIBLE : View.GONE}"/>
 
@@ -175,7 +175,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/created_layout"
-            android:src="@drawable/ic_baseline_circle_24"
+            android:src="@drawable/ic_baseline_thumb_up_24"
             android:layout_marginRight="50dp"
             android:visibility="@{viewModel.crnState == true ? View.VISIBLE : View.GONE}"/>
 
