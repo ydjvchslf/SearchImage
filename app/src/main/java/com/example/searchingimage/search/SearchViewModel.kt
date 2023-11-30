@@ -30,6 +30,7 @@ class SearchViewModel : ViewModel() {
         AppDebug.i(logTag, "createDb-()")
         photoRepository = PhotoRepository(context)
         photoList = photoRepository?.getAll()
+        AppDebug.i(logTag, "photoList ==> ${photoList?.value?.size}") ////////////////
         currentBookmarkList = photoList
     }
 
