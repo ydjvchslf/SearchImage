@@ -1,6 +1,7 @@
 package com.example.searchingimage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.searchingimage.data.response.UnsplashPhoto
 import com.example.searchingimage.databinding.LayoutDataItemBinding
+import com.example.searchingimage.util.AppDebug
+import com.example.searchingimage.util.currentBookmarkList
 
 class UnsplashAdapter(private val listener: OnItemClickListener): PagingDataAdapter<UnsplashPhoto, UnsplashAdapter.PhotoViewHolder>(PHOTO_COMPARATOR) {
 
@@ -49,6 +52,16 @@ class UnsplashAdapter(private val listener: OnItemClickListener): PagingDataAdap
                     .error(com.google.android.material.R.drawable.mtrl_ic_error)
                     .into(imageView)
             }
+            // 동기화
+            if (synchronizeBookmark(photo)) binding.heartMark.visibility = View.VISIBLE else binding.heartMark.visibility = View.GONE
+        }
+
+        fun synchronizeBookmark(photo: UnsplashPhoto): Boolean {
+            var result = false
+            currentBookmarkList?.observeForever { bookmarkList ->
+                result = bookmarkList.any { it.id == photo.id }
+            }
+            return result
         }
     }
 
