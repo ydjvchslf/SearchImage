@@ -1,5 +1,6 @@
 package com.example.searchingimage.search
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.GridLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -97,6 +99,7 @@ class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
                     if (keyword.isNotEmpty() && keyword.isNotBlank()) {
                         AppDebug.d(logTag, "keyword => $keyword")
                         //searchViewModel.searchPhoto(keyword)
+                        hideKeyboard()
                         binding.recyclerView.scrollToPosition(0)
                         searchViewModel.currentQuery.value = keyword
                         searchViewModel.photos.observe(viewLifecycleOwner) {
@@ -116,6 +119,16 @@ class SearchFragment : Fragment(), UnsplashAdapter.OnItemClickListener {
         AppDebug.d(logTag, "photoId: ${photo.id}")
         val navAction = SearchFragmentDirections.actionSearchFragmentToDetailFragment(photo)
         Navigation.findNavController(binding.root).navigate(navAction)
+    }
+
+    private fun hideKeyboard() {
+        val inputManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val focusedView = activity?.currentFocus
+        if (focusedView != null) {
+            inputManager.hideSoftInputFromWindow(focusedView.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS)
+            binding.editText.clearFocus() // 포커스 제거
+        }
     }
 
 }
