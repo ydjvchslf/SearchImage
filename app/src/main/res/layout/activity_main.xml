@@ -15,8 +15,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/main_nav_host"
-        android:background="@color/teal_200"
-        android:text="title" />
+        android:text="title"
+        android:textSize="25dp"/>
 
     <!-- 프래그먼트들이 보여질 컨테이너 -->
     <androidx.fragment.app.FragmentContainerView
